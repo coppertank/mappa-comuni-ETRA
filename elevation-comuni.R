@@ -9,6 +9,7 @@ library(tidyterra)
 theme_set(theme_minimal())
 
 comuni_etra <- st_read("cache/comuni_etra.geojson")
+fiumi <- st_read("cache/fiumi.geojson")
 
 country_iso <- "ITA"
 
@@ -129,6 +130,11 @@ shaded_relief_map <- ggplot() +
   tidyterra::scale_fill_hypso_tint_c(
     palette = "dem_poster",
     limits = as.vector(limits)
+  ) +
+  geom_sf(
+    data = fiumi,
+    color = "dodgerblue",
+    linewidth = 0.5
   ) +
   # Add labels and theme
   labs(
