@@ -149,3 +149,11 @@ shaded_relief_map <- ggplot() +
   )
 
 shaded_relief_map
+
+ggsave(
+  "plots/elevation_comuni_etra.png",
+  shaded_relief_map,
+  width = 10,
+  height = 8,
+  dpi = 300
+)
