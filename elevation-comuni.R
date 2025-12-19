@@ -135,7 +135,7 @@ shaded_relief_map <- ggplot() +
     title = "Elevazione comuni ETRA",
     fill = "Elevation (m)", # Legend title
     caption = paste(
-      "Data: SRTM 30s via geodata.",
+      "Data: SRTM 3s via geodata.",
       "Hillshade: Sun from West (270 deg)"
     )
   ) +
