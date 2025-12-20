@@ -132,25 +132,31 @@ shaded_relief_map <- ggplot() +
     limits = as.vector(limits)
   ) +
   geom_sf(
+    data = comuni_etra,
+    color = "white",
+    linewidth = 0.1
+  ) +
+  geom_sf(
     data = fiumi,
     color = "dodgerblue",
     linewidth = 0.5
   ) +
   # Add labels and theme
-  labs(
-    title = "Elevazione comuni ETRA",
-    fill = "Elevation (m)", # Legend title
-    caption = paste(
-      "Data: SRTM 3s via geodata.",
-      "Hillshade: Sun from West (270 deg)"
-    )
-  ) +
+  # labs(
+  #   title = "Elevazione comuni ETRA",
+  #   fill = "Elevation (m)", # Legend title
+  #   caption = paste(
+  #     "Data: SRTM 3s via geodata.",
+  #     "Hillshade: Sun from West (270 deg)"
+  #   )
+  # ) +
   # Use coord_sf to ensure correct aspect ratio for maps
   coord_sf(crs = terra::crs(ita_elev_raster)) + # Use
   # raster's CRS
-  theme_minimal() +
+  theme_void() + # theme_minimal() +
   theme(
-    legend.position = "right",
+    plot.background = element_rect(fill = "white"),
+    legend.position = "none", # "right",
     axis.title = element_blank()
   )
 
@@ -160,6 +166,6 @@ ggsave(
   "plots/elevation_comuni_etra.png",
   shaded_relief_map,
   width = 10,
-  height = 8,
+  height = 10,
   dpi = 300
 )
