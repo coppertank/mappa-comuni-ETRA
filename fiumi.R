@@ -6,11 +6,15 @@ library(lwgeom)
 idrografia <- st_read("input/geonodevidrografiarete/v_idrografia_rete.shp")
 comuni_etra <- st_read("cache/comuni_etra.geojson")
 
-fiumi <- idrografia %>% 
+idrografia <- st_zm(idrografia, drop = TRUE, what = "ZM")
+idrografia <- st_transform(idrografia, 4326)
+
+
+fiumi <- idrografia %>%
   filter(tipo_fiume == "FIUME")
 
-comuni_proj <- comuni_etra |> sf::st_transform(sf::st_crs(fiumi))
-comuni_union <- comuni_proj |> sf::st_union()
+# comuni_proj <- comuni_etra |> sf::st_transform(sf::st_crs(fiumi))
+comuni_union <- comuni_etra |> sf::st_union()
 rete_clipped <- fiumi |> sf::st_intersection(comuni_union)
 
 # rete_clipped is the resulting sf object
@@ -22,7 +26,7 @@ library(ggplot2)
 
 ggplot() +
   geom_sf(
-    data = comuni_proj,
+    data = comuni_etra,
     linewidth = 0.3,
     alpha = 0.4
   ) +
