@@ -136,7 +136,7 @@ shaded_relief_map <- ggplot() +
     geom_sf(
     data = contorni,
     color = "black",
-    linewidth = 0.3
+    linewidth = 0.4
   ) +
   geom_sf(
     data = fiumi,
