@@ -10,8 +10,7 @@ theme_set(theme_minimal())
 
 comuni_etra <- st_read("cache/geojson/comuni_etra.geojson")
 fiumi <- st_read("cache/geojson/fiumi.geojson")
-
-country_iso <- "ITA"
+contorni <- st_union(comuni_etra)
 
 ita_elev_1 <- geodata::elevation_3s(
   lon = 11,
@@ -30,16 +29,14 @@ ita_elev_raster <- terra::merge(ita_elev_1, ita_elev_2)
 rm(ita_elev_1, ita_elev_2)
 
 terra::plot(
-  ita_elev_raster,
-  main = paste("Elevation (SRTM 30s) -", country_iso)
+  ita_elev_raster
 )
 
 ita_elev_raster <- terra::crop(ita_elev_raster, comuni_etra)
 ita_elev_raster <- terra::mask(ita_elev_raster, comuni_etra)
 
 terra::plot(
-  ita_elev_raster,
-  main = paste("Elevation (SRTM 30s) -", country_iso)
+  ita_elev_raster
 )
 
 terrain_attributes <- terra::terrain(
@@ -136,6 +133,11 @@ shaded_relief_map <- ggplot() +
   #   color = "white",
   #   linewidth = 0.1
   # ) +
+    geom_sf(
+    data = contorni,
+    color = "black",
+    linewidth = 0.3
+  ) +
   geom_sf(
     data = fiumi,
     color = "cornflowerblue",
