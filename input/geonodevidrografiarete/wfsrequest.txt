@@ -1,1 +1,0 @@
-https://gaia.arpa.veneto.it/geoserver/wfs?service=WFS&request=GetFeature&version=1.0.0&typeNames=geonode%3Av_idrografia_rete&outputFormat=SHAPE-ZIP

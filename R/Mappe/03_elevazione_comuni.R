@@ -8,8 +8,8 @@ library(tidyterra)
 
 theme_set(theme_minimal())
 
-comuni_etra <- st_read("cache/comuni_etra.geojson")
-fiumi <- st_read("cache/fiumi.geojson")
+comuni_etra <- st_read("cache/geojson/comuni_etra.geojson")
+fiumi <- st_read("cache/geojson/fiumi.geojson")
 
 country_iso <- "ITA"
 
@@ -131,14 +131,14 @@ shaded_relief_map <- ggplot() +
     palette = "dem_poster",
     limits = as.vector(limits)
   ) +
-  geom_sf(
-    data = comuni_etra,
-    color = "white",
-    linewidth = 0.1
-  ) +
+  # geom_sf(
+  #   data = comuni_etra,
+  #   color = "white",
+  #   linewidth = 0.1
+  # ) +
   geom_sf(
     data = fiumi,
-    color = "dodgerblue",
+    color = "cornflowerblue",
     linewidth = 0.5
   ) +
   # Add labels and theme
@@ -163,7 +163,7 @@ shaded_relief_map <- ggplot() +
 shaded_relief_map
 
 ggsave(
-  "plots/elevation_comuni_etra.png",
+  "images/elevazione_comuni_etra.png",
   shaded_relief_map,
   width = 10,
   height = 10,

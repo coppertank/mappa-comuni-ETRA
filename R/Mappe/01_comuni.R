@@ -2,7 +2,7 @@ library(tidyverse)
 library(sf)
 library(leaflet)
 
-comuni <- st_read("input/comuni/comuni.shp")
+comuni <- st_read("input/shp/comuni/comuni.shp")
 # st_crs(comuni)
 comuni <- st_transform(comuni, crs = "EPSG:4326")
 
@@ -86,4 +86,4 @@ comuni_etra_shp <- comuni_pv |>
 
 comuni_etra_shp <- st_cast(comuni_etra_shp, "POLYGON")
 
-st_write(comuni_etra_shp, "cache/comuni_etra.geojson")
+# st_write(comuni_etra_shp, "cache/geojson/comuni_etra.geojson")

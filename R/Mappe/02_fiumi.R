@@ -3,8 +3,8 @@ library(sf)
 library(leaflet)
 library(lwgeom)
 
-idrografia <- st_read("input/geonodevidrografiarete/v_idrografia_rete.shp")
-comuni_etra <- st_read("cache/comuni_etra.geojson")
+idrografia <- st_read("input/shp/geonodevidrografiarete/v_idrografia_rete.shp")
+comuni_etra <- st_read("cache/geojson/comuni_etra.geojson")
 
 idrografia <- st_zm(idrografia, drop = TRUE, what = "ZM")
 idrografia <- st_transform(idrografia, 4326)
@@ -20,7 +20,7 @@ rete_clipped <- fiumi |> sf::st_intersection(comuni_union)
 # rete_clipped is the resulting sf object
 rete_clipped
 
-# st_write(rete_clipped, "cache/fiumi.geojson")
+# st_write(rete_clipped, "cache/geojson/fiumi.geojson")
 
 library(ggplot2)
 

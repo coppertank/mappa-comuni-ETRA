@@ -2,7 +2,7 @@ library(tidyverse)
 library(sf)
 library(leaflet)
 
-comuni_etra <- st_read("cache/comuni_etra.geojson")
+comuni_etra <- st_read("cache/geojson/comuni_etra.geojson")
 
 
 #bin_pal = colorBin('YlOrRd', comuni_etra$area)
