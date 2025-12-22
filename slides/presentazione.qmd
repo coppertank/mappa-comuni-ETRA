@@ -1,7 +1,16 @@
 ---
-format: revealjs
+format:
+  revealjs:
+    css: styles.css
+    chalkboard: true
+    # embed-resources: true
 ---
 
 # {background-image="Canva/1.svg"}
 
 # {background-image="Canva/2.svg"}
+
+# Slide 3
+
+Questo dovrebbe essere un testo in italiano.
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
