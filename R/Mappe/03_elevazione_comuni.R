@@ -5,6 +5,12 @@ library(tidyverse)
 library(viridis)
 library(ggnewscale)
 library(tidyterra)
+library(elevatr)
+library(colorspace)
+library(metR)
+library(ggspatial)
+library(rayshader)
+
 
 comuni_etra <- st_read("cache/geojson/comuni_etra.geojson")
 fiumi <- st_read("cache/geojson/fiumi.geojson")
@@ -254,60 +260,25 @@ ggsave(
 # 3. Download & prepare DEM
 #--------------------------
 
-contorni_sf <- st_sf(geometry = contorni) |> 
-    st_set_crs(st_crs(comuni_etra))
-
-# Transform to WGS84 if needed (elevatr expects lon/lat)
-if (!sf::st_is_longlat(contorni_sf)) {
-    contorni_sf <- sf::st_transform(contorni_sf, 4326)
-}
-
-dem_rast <- elevatr::get_elev_raster(
-    contorni_sf,
-    z = 9, clip = "locations"
-)
-
-# Convert to terra SpatRaster and ensure it has a CRS before projecting
-dem_rast_terra <- terra::rast(dem_rast)
-
-if (is.na(terra::crs(dem_rast_terra)) || terra::crs(dem_rast_terra) == "") {
-    terra::crs(dem_rast_terra) <- terra::crs(contorni_sf)
-}
-
 # Target projection (keep EPSG:4326 or change if needed)
 proj <- "EPSG:4326"
 
-# Try to project; on failure fall back to the (CRS-assigned) raster
-dem_rast_proj <- tryCatch(
-    terra::project(dem_rast_terra, proj),
-    error = function(e) {
-        warning("terra::project failed — using raster with assigned CRS without reprojecting")
-        dem_rast_terra
-    }
-)
-
-dem_df <- as.data.frame(dem_rast_proj, xy = TRUE)
-
-# head(dem_df)
-colnames(dem_df) <- c("x", "y", "elevation")
-head(dem_df)
-
 # 4. Compute breaks & limits
 # --------------------------
-limits <- range(dem_df$elevation, na.rm = TRUE)
+limits <- range(elev_df_gg$elevation, na.rm = TRUE)
 breaks <- seq(
-    floor(limits[1] / 50) * 50,
-    ceiling(limits[2] / 50) * 50,
-    by = 200
+  floor(limits[1] / 50) * 50,
+  ceiling(limits[2] / 50) * 50,
+  by = 200
 )
 
 # 5. Build your hypsometric palette
 # ---------------------------------
 pal_vec <- tidyterra::hypso.colors2(
-    n = 12,
-    palette = "dem_poster",
-    alpha = 1,
-    rev = FALSE
+  n = 12,
+  palette = "dem_poster",
+  alpha = 1,
+  rev = FALSE
 )
 
 pie(rep(1, length(pal_vec)), col = pal_vec)
@@ -317,133 +288,104 @@ pie(rep(1, length(pal)), col = pal)
 light_col <- colorspace::lighten(pal[2], amount = 0.15)
 dark_col <- colorspace::darken(pal[5], amount = 0.25)
 
-# 6. Define a custom theme
-# ------------------------
-theme_for_the_win <- function() {
-    theme_minimal(base_family = "Helvetica") +
-        theme(
-            axis.line = element_blank(),
-            axis.title.x = element_blank(),
-            axis.title.y = element_blank(),
-            axis.text.x = element_blank(),
-            axis.text.y = element_blank(),
-            panel.grid.major = element_blank(),
-            panel.grid.minor = element_blank(),
-            plot.background = element_rect(
-                fill = "white", color = NA
-            ),
-            plot.title = element_text(
-                size = 16, color = "grey10",
-                hjust = .5, margin = margin(b = 5),
-                vjust = -5
-            ),
-            plot.caption = element_text(
-                size = 8, face = "italic", hjust = 1,
-                margin = margin(t = 5), vjust = 15
-            ),
-            plot.margin = unit(
-                c(
-                    t = .1, r = .1,
-                    l = .1, b = .1
-                ), "lines"
-            ),
-            legend.position = "right"
-        )
-}
 
 # 7. Build the 2D Tanaka‐style map
 # --------------------------------
 gg_tanaka_hypso <- ggplot(
-    data = dem_df, aes(x = x, y = y, z = elevation)
+  data = elev_df_gg,
+  aes(x = x, y = y, z = elevation)
 ) +
-    geom_contour_fill(
-        breaks = breaks
-    ) +
-    scale_fill_gradientn(
-        name = "Elevation",
-        colors = pal,
-        breaks = breaks,
-        labels = round(breaks, 0),
-        limits = limits,
-        guide = guide_colourbar(
-            title.position = "top", 
-            title.hjust = .5,
-            ticks = FALSE, 
-            barheight = unit(5, "cm"),
-            frame.colour = NA
-        )
-    ) +
-    metR::geom_contour_tanaka(
-        breaks = breaks,
-        sun.angle = 45,
-        light = light_col,
-        dark = dark_col,
-        range = c(0.01, 0.3),
-        smooth = 0.8
-    ) +
-    ggspatial::annotation_scale(
-        location = "bl",
-        width_hint = 0.25,
-        text_cex = 0.7
-    ) +
-    ggspatial::annotation_north_arrow(
-        location = "bl",
-        which_north = "true",
-        pad_x = unit(0.1, "in"),
-        pad_y = unit(0.6, "in"),
-        style = north_arrow_fancy_orienteering()
-    ) +
-    coord_sf(crs = proj) +
-    labs(
-        title = "Tuscany: Digital Elevation Model",
-        caption = "Data: Amazon Web Services Tiles"
-    ) +
-    theme_for_the_win()
+  geom_contour_fill(
+    breaks = breaks
+  ) +
+  scale_fill_gradientn(
+    name = "Elevation",
+    colors = pal,
+    breaks = breaks,
+    labels = round(breaks, 0),
+    limits = limits,
+    guide = guide_colourbar(
+      title.position = "top",
+      title.hjust = .5,
+      ticks = FALSE,
+      barheight = unit(5, "cm"),
+      frame.colour = NA
+    )
+  ) +
+  metR::geom_contour_tanaka(
+    breaks = breaks,
+    sun.angle = 45,
+    light = light_col,
+    dark = dark_col,
+    range = c(0.01, 0.3),
+    smooth = 0.8
+  ) +
+  geom_sf(
+    data = fiumi,
+    inherit.aes = FALSE, # <- prevents looking for x,y in fiumi
+    color = "#1f78b4",
+    linewidth = 0.8
+  ) +
+  coord_sf(crs = proj) +
+  theme_void() +
+  theme(
+    plot.background = element_rect(
+      fill = "white",
+      color = NA
+    ),
+    plot.margin = unit(
+      c(
+        t = .1,
+        r = .1,
+        l = .1,
+        b = .1
+      ),
+      "lines"
+    ),
+    legend.position = "none"
+  )
 
 ggsave(
-    "tuscany-tanaka-2d.png", gg_tanaka_hypso,
-    width = 7, height = 7, bg = "white"
+  "images/etra-tanaka-2d.png",
+  gg_tanaka_hypso,
+  width = 7,
+  height = 7,
+  # dpi = 300,
+  bg = "white"
 )
 
 # 8. 3D extrusion & high‐quality render
 # -------------------------------------
+# rgl::close3d()
+# rgl::rgl.close()
+
 rayshader::plot_gg(
-    ggobj = gg_tanaka_hypso,
-    width = 7,
-    height = 7,
-    scale = 150,
-    shadow = TRUE,
-    shadow_intensity = 1,
-    windowsize = c(700, 700),
-    zoom = 0.55,
-    phi = 60,
-    theta = 0,
-    background = "white",
-    multicore = TRUE
+  ggobj = gg_tanaka_hypso,
+  width = 7,
+  height = 7,
+  scale = 140,
+  shadow = TRUE,
+  shadow_intensity = 1,
+  windowsize = c(700, 700),
+  zoom = 0.50,
+  phi = 60,
+  theta = 0,
+  background = "white",
+  multicore = TRUE
 )
 
-# 9. Prepare HDR environment map
-# ------------------------------
-u <- "https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/4k/venice_sunrise_4k.hdr"
-hdri_file <- basename(u)
 
-download.file(
-    url = u,
-    destfile = hdri_file,
-    mode = "wb"
-)
 # 10. Final high‐quality PNG
 # --------------------------
 rayshader::render_highquality(
-    filename = "images/tuscany-tanaka-3d-test.png",
-    preview = TRUE,
-    light = FALSE,
-    environment_light = hdri_file,
-    intensity = 3,
-    rotate_env = 90,
-    parallel = TRUE,
-    width = 1800,
-    height = 1800,
-    interactive = FALSE
+  filename = "images/comuni-etra-tanaka-3d-test.png",
+  preview = TRUE,
+  light = FALSE,
+  environment_light = "R/Mappe/lights/venice_sunrise_4k.hdr",
+  intensity = 3,
+  rotate_env = 90,
+  parallel = TRUE,
+  width = 1800,
+  height = 1800,
+  interactive = FALSE
 )
-
