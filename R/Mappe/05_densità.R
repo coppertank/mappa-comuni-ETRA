@@ -2,18 +2,27 @@ library(sf)
 library(ggplot2)
 library(tidyverse)
 
-# griglia_europa <- st_read("input/grid_1km_surf.gpkg")
 comuni_etra <- st_read("cache/geojson/comuni_etra.geojson")
 strade_etra <- st_read("cache/geojson/strade_etra.geojson")
 
-# griglia_europa <- st_transform(griglia_europa, st_crs(comuni_etra))
 
-# idx <- st_intersects(griglia_europa, comuni_etra, sparse = FALSE)
-# griglia_comuni_etra <- griglia_europa[apply(idx, 1, any), ]
+# 1 Km -------------------------------------------------------------------
 
-# st_write(griglia_comuni_etra, "cache/geojson/griglia_densità.geojson")
+# griglia_europa_1km <- st_read("input/grid_1km_surf.gpkg")
+# griglia_europa_1km <- st_transform(griglia_europa_1km, st_crs(comuni_etra))
+# idx_1km <- st_intersects(griglia_europa_1km, comuni_etra, sparse = FALSE)
+# griglia_comuni_etra_1km <- griglia_europa_1km[apply(idx_1km, 1, any), ]
+# st_write(griglia_comuni_etra_1km, "cache/geojson/griglia_densità_1km.geojson")
 
-griglia_comuni_etra <- st_read("cache/geojson/griglia_densità.geojson")
+# 2 Km -------------------------------------------------------------------
+
+# griglia_europa_2km <- st_read("input/grid_2km_surf.gpkg")
+# griglia_europa_2km <- st_transform(griglia_europa_2km, st_crs(comuni_etra))
+# idx_2km <- st_intersects(griglia_europa_2km, comuni_etra, sparse = FALSE)
+# griglia_comuni_etra_2km <- griglia_europa_2km[apply(idx_2km, 1, any), ]
+# st_write(griglia_comuni_etra_2km, "cache/geojson/griglia_densità_2km.geojson")
+
+griglia_comuni_etra <- st_read("cache/geojson/griglia_densità_2km.geojson")
 
 ggplot(griglia_comuni_etra) +
   geom_sf(aes(fill = TOT_P_2021), color = NA) + # niente bordo per effetto "heatmap"
