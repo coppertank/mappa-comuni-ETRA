@@ -1,0 +1,1 @@
+http://idt2-geoserver.regione.veneto.it:80/geoserver/wfs?service=WFS&VERSION=1.0.0&REQUEST=GetFeature&typeName=rv:c0104021_province&outputFormat=SHAPE-ZIP

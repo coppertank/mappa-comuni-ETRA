@@ -2,7 +2,7 @@ library(tidyverse)
 library(sf)
 library(leaflet)
 
-comuni <- st_read("input/shp/comuni/comuni.shp")
+comuni <- st_read("input/shp/rvccomuni/c0104011_comuni.shp")
 # st_crs(comuni)
 comuni <- st_transform(comuni, crs = "EPSG:4326")
 
