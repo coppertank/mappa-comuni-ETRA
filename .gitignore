@@ -1,5 +1,5 @@
 input/grid_1km_surf.gpkg
-input/shp/rcvcomuni/
-input/shp/rcvprovince/
+input/shp/rvccomuni/
+input/shp/rvcprovince/
 input/shp/geonodevidrografiarete/
 input/shp/rvcelementostradale/
