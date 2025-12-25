@@ -13,7 +13,7 @@ library(rayshader)
 
 
 comuni_etra <- st_read("cache/geojson/comuni_etra.geojson")
-fiumi <- st_read("cache/geojson/fiumi.geojson")
+fiumi_etra <- st_read("cache/geojson/fiumi_etra.geojson")
 contorni <- st_union(comuni_etra)
 
 ita_elev_1 <- geodata::elevation_3s(
@@ -143,7 +143,7 @@ shaded_relief_map <- ggplot() +
     linewidth = 0.4
   ) +
   geom_sf(
-    data = fiumi,
+    data = fiumi_etra,
     color = "cornflowerblue",
     linewidth = 0.5
   ) +
@@ -221,7 +221,7 @@ divisione_comuni <- ggplot() +
   ) +
   ggnewscale::new_scale_fill() + # NEW: separate scale for discrete fills
   geom_sf(
-    data = fiumi,
+    data = fiumi_etra,
     color = "cornflowerblue",
     linewidth = 0.5,
     fill = NA
@@ -321,8 +321,8 @@ gg_tanaka_hypso <- ggplot(
     smooth = 0.8
   ) +
   geom_sf(
-    data = fiumi,
-    inherit.aes = FALSE, # <- prevents looking for x,y in fiumi
+    data = fiumi_etra,
+    inherit.aes = FALSE, # <- prevents looking for x,y in fiumi_etra
     color = "#1f78b4",
     linewidth = 0.8
   ) +
