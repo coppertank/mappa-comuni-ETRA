@@ -14,7 +14,6 @@ library(rayshader)
 
 comuni_etra <- st_read("cache/geojson/comuni_etra.geojson")
 fiumi_etra <- st_read("cache/geojson/fiumi_etra.geojson")
-contorni <- st_union(comuni_etra)
 
 ita_elev_1 <- geodata::elevation_3s(
   lon = 11,

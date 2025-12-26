@@ -1,8 +1,7 @@
 library(tidyverse)
 library(sf)
-library(leaflet)
 
-comuni <- st_read("input/shp/rvccomuni/c0104011_comuni.shp")
+comuni <- st_read("input/shp/comuni/c0104011_comuni.shp")
 # st_crs(comuni)
 comuni <- st_transform(comuni, crs = "EPSG:4326")
 
@@ -87,3 +86,7 @@ comuni_etra_shp <- comuni_pv |>
 comuni_etra_shp <- st_cast(comuni_etra_shp, "POLYGON")
 
 # st_write(comuni_etra_shp, "cache/geojson/comuni_etra.geojson")
+
+bordi_etra <- comuni_etra_shp |> sf::st_union()
+
+# st_write(bordi_etra, "cache/geojson/bordi_etra.geojson")

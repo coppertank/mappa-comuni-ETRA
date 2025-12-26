@@ -1,6 +1,4 @@
 input/grid_1km_surf.gpkg
 input/grid_2km_surf.gpkg
-input/shp/rvccomuni/
-input/shp/rvcprovince/
-input/shp/geonodevidrografiarete/
-input/shp/rvcelementostradale/
+input/shp/
+input/nord-est-251225-free.shp/
