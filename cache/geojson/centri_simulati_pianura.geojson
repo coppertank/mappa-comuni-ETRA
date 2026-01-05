@@ -1,0 +1,18 @@
+{
+"type": "FeatureCollection",
+"name": "centri_simulati_pianura",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "id": 5, "codistat": "24025", "nomcom": "Cartigliano", "provincia": "VI", "area": 7387861.3736652136, "perimetro": 16160.685, "id1": 369 }, "geometry": { "type": "Point", "coordinates": [ 11.709206031195988, 45.708470828490988 ] } },
+{ "type": "Feature", "properties": { "id": 2, "codistat": "24082", "nomcom": "Pozzoleone", "provincia": "VI", "area": 11213129.254718408, "perimetro": 19692.034, "id1": 350 }, "geometry": { "type": "Point", "coordinates": [ 11.693245781895531, 45.665677367386671 ] } },
+{ "type": "Feature", "properties": { "id": 7, "codistat": "28019", "nomcom": "Camposampiero", "provincia": "PD", "area": 21118648.821836103, "perimetro": 34397.73, "id1": 293 }, "geometry": { "type": "Point", "coordinates": [ 11.931225169454272, 45.550741638341812 ] } },
+{ "type": "Feature", "properties": { "id": 13, "codistat": "28023", "nomcom": "Carmignano di Brenta", "provincia": "PD", "area": 14748567.348322345, "perimetro": 21836.234, "id1": 324 }, "geometry": { "type": "Point", "coordinates": [ 11.690709412710161, 45.633203426304242 ] } },
+{ "type": "Feature", "properties": { "id": 12, "codistat": "28040", "nomcom": "Galzignano Terme", "provincia": "PD", "area": 18165653.687173255, "perimetro": 22158.285, "id1": 132 }, "geometry": { "type": "Point", "coordinates": [ 11.730975718721359, 45.312348859146532 ] } },
+{ "type": "Feature", "properties": { "id": 10, "codistat": "28041", "nomcom": "Gazzo", "provincia": "PD", "area": 22687516.222217642, "perimetro": 31138.32, "id1": 283 }, "geometry": { "type": "Point", "coordinates": [ 11.703054139030689, 45.560043041679201 ] } },
+{ "type": "Feature", "properties": { "id": 1, "codistat": "28045", "nomcom": "Limena", "provincia": "PD", "area": 15123501.20217498, "perimetro": 25445.733, "id1": 233 }, "geometry": { "type": "Point", "coordinates": [ 11.830314300370571, 45.449668464003508 ] } },
+{ "type": "Feature", "properties": { "id": 15, "codistat": "28063", "nomcom": "Piazzola sul Brenta", "provincia": "PD", "area": 40886672.626720056, "perimetro": 50166.157, "id1": 281 }, "geometry": { "type": "Point", "coordinates": [ 11.789690732317183, 45.543095644216557 ] } },
+{ "type": "Feature", "properties": { "id": 8, "codistat": "28076", "nomcom": "San Giorgio in Bosco", "provincia": "PD", "area": 28430029.728366554, "perimetro": 33876.906, "id1": 303 }, "geometry": { "type": "Point", "coordinates": [ 11.786962827391633, 45.573798415757885 ] } },
+{ "type": "Feature", "properties": { "id": 9, "codistat": "28089", "nomcom": "Teolo", "provincia": "PD", "area": 31290139.692806907, "perimetro": 45806.99, "id1": 171 }, "geometry": { "type": "Point", "coordinates": [ 11.694855728982077, 45.32848834829791 ] } },
+{ "type": "Feature", "properties": { "id": 11, "codistat": "28089", "nomcom": "Teolo", "provincia": "PD", "area": 31290139.692806907, "perimetro": 45806.99, "id1": 171 }, "geometry": { "type": "Point", "coordinates": [ 11.676322436007823, 45.354293100499341 ] } }
+]
+}

@@ -4,15 +4,17 @@ library(dodgr)
 
 comuni_etra <- st_read("cache/geojson/comuni_etra.geojson")
 griglia_comuni_etra <- st_read("cache/geojson/griglia_densità_2km.geojson")
-centroidi_comuni <- st_read("cache/geojson/centroidi_comuni.geojson")
+centroidi_comuni <- st_read("cache/geojson/centroidi_comuni_2km.geojson")
 centri_simulati <- st_read("cache/geojson/centri_simulati.geojson")
-strade_etra <- st_read("cache/geojson/strade_etra.geojson")
+strade_etra <- st_read("cache/geojson/strade_complete.geojson")
+strade_etra <- st_buffer(strade_etra, 10)
 
 graph <- weight_streetnet(
   strade_etra,
   wt_profile = "motorcar",
   type_col = "fclass"
 )
+graph <- graph[graph$component == 1, ]
 
 vertices <- dodgr_vertices(graph)
 
@@ -38,18 +40,18 @@ D <- dodgr_dists(graph, from = from_xy, to = to_xy, shortest = TRUE)
 # from_xy <- vertices[match(from_v, vertices$id), c("x", "y")]
 # to_xy <- vertices[match(to_v, vertices$id), c("x", "y")]
 
-# from_xy <- st_coordinates(centroidi_comuni) # origini
-# to_xy <- st_coordinates(centri_simulati)
+from_xy <- st_coordinates(centroidi_comuni) # origini
+to_xy <- st_coordinates(centri_simulati)
 
 # # 3) Matrice distanze (righe = centroidi, colonne = centri)
-# D <- dodgr_dists(
-#   graph,
-#   from = from_xy,
-#   to = to_xy,
-#   shortest = TRUE
-# )
+D <- dodgr_dists(
+  graph,
+  from = from_xy,
+  to = to_xy,
+  shortest = TRUE
+)
 
-i <- 2 # primo centroide
+i <- 28 # primo centroide
 j <- 1 # primo centro
 
 paths_sf <- dodgr_paths(

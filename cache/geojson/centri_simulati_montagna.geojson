@@ -1,0 +1,11 @@
+{
+"type": "FeatureCollection",
+"name": "centri_simulati_montagna",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "id": 3, "codistat": "24009", "nomcom": "Asiago", "provincia": "VI", "area": 162989595.2280142, "perimetro": 109780.338, "id1": 505 }, "geometry": { "type": "Point", "coordinates": [ 11.528112412275926, 45.836448415939103 ] } },
+{ "type": "Feature", "properties": { "id": 4, "codistat": "24042", "nomcom": "Gallio", "provincia": "VI", "area": 47549661.459931761, "perimetro": 33944.43, "id1": 490 }, "geometry": { "type": "Point", "coordinates": [ 11.576010347978331, 45.881468014336612 ] } },
+{ "type": "Feature", "properties": { "id": 6, "codistat": "24127", "nomcom": "Lusiana Conco", "provincia": "VI", "area": 61120860.275440983, "perimetro": 40199.912, "id1": 583 }, "geometry": { "type": "Point", "coordinates": [ 11.613595333572645, 45.805175460546558 ] } },
+{ "type": "Feature", "properties": { "id": 14, "codistat": "24127", "nomcom": "Lusiana Conco", "provincia": "VI", "area": 61120860.275440983, "perimetro": 40199.912, "id1": 583 }, "geometry": { "type": "Point", "coordinates": [ 11.588501753932695, 45.784249390789213 ] } }
+]
+}
