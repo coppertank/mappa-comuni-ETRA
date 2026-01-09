@@ -7,7 +7,6 @@ griglia_comuni_etra <- st_read("cache/geojson/griglia_densità_2km.geojson")
 centroidi_comuni <- st_read("cache/geojson/centroidi_comuni_2km.geojson")
 centri_simulati <- st_read("cache/geojson/centri_simulati.geojson")
 strade_etra <- st_read("cache/geojson/strade_complete.geojson")
-strade_etra <- st_buffer(strade_etra, 10)
 
 graph <- weight_streetnet(
   strade_etra,
@@ -51,8 +50,8 @@ D <- dodgr_dists(
   shortest = TRUE
 )
 
-i <- 28 # primo centroide
-j <- 1 # primo centro
+i <- 1 # primo centroide
+j <- 15 # primo centro
 
 paths_sf <- dodgr_paths(
   graph = graph,
